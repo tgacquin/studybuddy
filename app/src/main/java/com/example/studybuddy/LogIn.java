@@ -100,6 +100,8 @@ public final class LogIn extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d(TAG, "signInWithCredential:success: currentUser: " + user.getEmail());
                             Toast.makeText(LogIn.this, "Firebase Authentication Succeeded ",  Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(LogIn.this, MainMenu.class);
+                            startActivity(i);
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LogIn.this, "Firebase Authentication failed:" + task.getException(),  Toast.LENGTH_LONG).show();

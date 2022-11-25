@@ -1,19 +1,108 @@
 package com.example.studybuddy;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import kotlin.Metadata;
 import org.jetbrains.annotations.Nullable;
 
-@Metadata(
-        mv = {1, 7, 1},
-        k = 1,
-        d1 = {"\u0000\u0018\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\u0012\u0010\u0003\u001a\u00020\u00042\b\u0010\u0005\u001a\u0004\u0018\u00010\u0006H\u0014¨\u0006\u0007"},
-        d2 = {"Lcom/example/studybuddy/YourFlashcardsView;", "Landroidx/appcompat/app/AppCompatActivity;", "()V", "onCreate", "", "savedInstanceState", "Landroid/os/Bundle;", "StudyBuddy.app.main"}
-)
+import java.util.ArrayList;
+
+
 public final class YourFlashcardsView extends AppCompatActivity {
+    TextView cardContent;
+    ArrayList<FlashcardModel> flashcards;
+    TextView rightArrow;
+    TextView leftArrow;
+    TextView setName;
+    TextView progress;
+    FirebaseAuth mAuth;
+    boolean showTerm;
+    int i;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_your_flashcards_view);
+        i = 0;
+        showTerm = true;
+        cardContent = findViewById(R.id.cardcontent);
+        leftArrow = findViewById(R.id.leftarrow);
+        rightArrow = findViewById(R.id.rightarrow);
+        setName = findViewById(R.id.viewSetName);
+        flashcards = new ArrayList<FlashcardModel>();
+        progress = findViewById(R.id.progress);
+        mAuth = FirebaseAuth.getInstance();
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String id = intent.getStringExtra("id");
+        setName.setText(name);
+
+
+        //Replace with data later
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getEmail().split("@")[0]).child(id).child("flashcards");
+        ref.addValueEventListener(new ValueEventListener() {
+                                      @Override
+                                      public void onDataChange(DataSnapshot dataSnapshot) {
+                                          for (DataSnapshot item_snapshot : dataSnapshot.getChildren()) {
+                                              String term = item_snapshot.child("definition").getValue().toString();
+                                              String definition = item_snapshot.child("term").getValue().toString();
+                                              flashcards.add(new FlashcardModel(term, definition));
+                                          }
+                                          cardContent.setText(flashcards.get(0).term);
+                                          progress.setText(1 + "/" + flashcards.size());
+                                      }
+
+
+                                      @Override
+                                      public void onCancelled(@NonNull DatabaseError error) {
+                                      }
+                                  });
+
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i++; i%=flashcards.size();
+                cardContent.setText(flashcards.get(i).term);
+                progress.setText(i+1 + "/" + flashcards.size());
+            }
+        });
+
+
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i--;
+                if (i == -1) {
+                    i = flashcards.size() - 1;
+                }
+                progress.setText(i+1 + "/" + flashcards.size());
+                cardContent.setText(flashcards.get(i).term);
+
+            }
+        });
+
+        cardContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTerm = !showTerm;
+                if (showTerm==false) {
+                    cardContent.setText(flashcards.get(i).definition);
+                } else {
+                    cardContent.setText(flashcards.get(i).term);
+                }
+            }
+        });
     }
 }

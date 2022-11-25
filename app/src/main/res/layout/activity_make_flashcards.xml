@@ -7,9 +7,10 @@
     tools:context=".MakeFlashcards">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,53 +18,80 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:gravity="center_vertical"
+            android:layout_height="0dp"
+            android:layout_weight=".08"
+            android:background="#FFFFFF"
+            android:gravity="end"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:weightSum="1">
 
             <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:id="@+id/makeSave"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Your Set"
-                android:textSize="28sp" />
+                android:layout_marginTop="6dp"
+                android:layout_weight=".2"
+                android:clickable="true"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="save"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/makeAddCard"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8sp"
+                android:layout_marginRight="0sp"
+                android:layout_weight=".1"
+                android:fontFamily="serif"
+                android:text="+"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_gravity="center_horizontal"
-            android:gravity="clip_vertical|center_horizontal"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight=".08"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="1"
-                android:text="Save"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/button4"
+            <EditText
+                android:id="@+id/makeSetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Add card"
+                android:layout_marginLeft="10sp"
+                android:layout_marginTop="0dp"
+                android:height="40sp"
+                android:fontFamily="@font/dm_sans_bold"
+                android:gravity="center"
+                android:hint="Enter set name"
+                android:textColor="#000000"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/flashcards_recycler"
+            android:id="@+id/makeRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="539dp" />
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight=".84"
+            android:background="#00B16969"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

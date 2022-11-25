@@ -3,36 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="141sp">
 
     <RelativeLayout
-        android:layout_width="403dp"
+        android:layout_width="match_parent"
         android:layout_height="141dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="394dp"
-            android:layout_height="117dp"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="4dp"
             android:layout_marginTop="14dp"
+            android:background="@drawable/outline"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <EditText
                 android:id="@+id/term"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10px"
-                android:text="term" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="30dp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:fontFamily="serif"
+                android:hint="Enter term"
+                android:textColor="#000000" />
 
-            <TextView
+            <EditText
                 android:id="@+id/definition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="definition" />
+                android:layout_marginLeft="5dp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:fontFamily="serif"
+                android:gravity="left"
+                android:hint="Enter definition"
+                android:textColor="#000000" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
