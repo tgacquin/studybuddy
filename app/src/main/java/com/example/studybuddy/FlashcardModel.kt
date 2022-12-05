@@ -1,11 +1,3 @@
-package com.example.studybuddy;
+package com.example.studybuddy
 
-public class FlashcardModel {
-    public String term;
-    public String definition;
-
-    public FlashcardModel(String term, String definition) {
-        this.term = term;
-        this.definition = definition;
-    }
-}
+class FlashcardModel(var term: String, var definition: String)

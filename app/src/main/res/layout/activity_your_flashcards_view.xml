@@ -63,6 +63,7 @@
         android:backgroundTint="@color/white"
         android:clickable="true"
         android:contentDescription="&quot;go to left card&quot;"
+        android:minWidth="48dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/progress"
         app:layout_constraintEnd_toStartOf="@+id/flashcard"

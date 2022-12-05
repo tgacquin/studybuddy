@@ -1,106 +1,73 @@
-package com.example.studybuddy;
+package com.example.studybuddy
 
-import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import com.example.studybuddy.FlashcardModel
+import com.example.studybuddy.MakeFlashcardsAdapter.TextChangeCallback
+import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
+import com.example.studybuddy.R
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.text.TextWatcher
+import android.text.Editable
+import android.view.View
+import java.util.ArrayList
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.studybuddy.FlashcardModel;
-import com.example.studybuddy.MakeFlashcards;
-import com.example.studybuddy.R;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-
-public class MakeFlashcardsAdapter extends RecyclerView.Adapter<MakeFlashcardsAdapter.MyViewHolder> {
-
-    private ArrayList<FlashcardModel> flashcards;
-    private TextChangeCallback callbackTerm;
-    private TextChangeCallback callbackDefinition;
-
-    public interface TextChangeCallback {
-        void textChangedAt(int position, String text);
+class MakeFlashcardsAdapter(
+    private val flashcards: ArrayList<FlashcardModel>, private val callbackTerm: TextChangeCallback,
+    private val callbackDefinition: TextChangeCallback
+) : RecyclerView.Adapter<MakeFlashcardsAdapter.MyViewHolder>() {
+    interface TextChangeCallback {
+        fun textChangedAt(position: Int, text: String?)
     }
 
-    public MakeFlashcardsAdapter(ArrayList<FlashcardModel> flashcards,TextChangeCallback callbackTerm,
-                                 TextChangeCallback callbackDefinition) {
-        this.flashcards = flashcards;
-        this.callbackTerm = callbackTerm;
-        this.callbackDefinition = callbackDefinition;
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val term: TextView
+        val definition: TextView
 
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView term;
-        private TextView definition;
-
-        public MyViewHolder(final View view) {
-            super(view);
-            term = view.findViewById(R.id.term);
-            definition = view.findViewById(R.id.definition);
+        init {
+            term = view.findViewById(R.id.term)
+            definition = view.findViewById(R.id.definition)
         }
     }
 
-    @NonNull
-    @Override
-    public MakeFlashcardsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.flashcard_toadd, parent, false);
-        return new MyViewHolder(itemView);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.flashcard_toadd, parent, false)
+        return MyViewHolder(itemView)
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MakeFlashcardsAdapter.MyViewHolder holder, int position) {
-        String term = flashcards.get(position).term;
-        String definition = flashcards.get(position).definition;
-        holder.term.setText(term);
-        holder.definition.setText(definition);
-        holder.term.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.equals("")){
-                    return;
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val term = flashcards[position].term
+        val definition = flashcards[position].definition
+        holder.term.text = term
+        holder.definition.text = definition
+        holder.term.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s == "") {
+                    return
                 }
-                flashcards.get(position).term = String.valueOf(s);
-                callbackTerm.textChangedAt(position, String.valueOf(s));
+                flashcards[position].term = s.toString()
+                callbackTerm.textChangedAt(position, s.toString())
             }
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
 
-        holder.definition.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.equals("")){
-                    return;
+            override fun afterTextChanged(s: Editable) {}
+        })
+        holder.definition.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s == "") {
+                    return
                 }
-                flashcards.get(position).definition = String.valueOf(s);
-                callbackDefinition.textChangedAt(position, String.valueOf(s));
+                flashcards[position].definition = s.toString()
+                callbackDefinition.textChangedAt(position, s.toString())
             }
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
 
-
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 
-    @Override
-    public int getItemCount() {
-        return flashcards.size();
+    override fun getItemCount(): Int {
+        return flashcards.size
     }
 }
