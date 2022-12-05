@@ -1,5 +1,6 @@
 package com.example.studybuddy
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import com.example.studybuddy.FlashcardModel
@@ -42,7 +43,6 @@ class YourFlashcardsView : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         val id = intent.getStringExtra("id")
         setName.setText(name)
-
 
         //Replace with data later
         val ref = FirebaseDatabase.getInstance().reference.child(
