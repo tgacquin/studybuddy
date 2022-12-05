@@ -1,5 +1,6 @@
 package com.example.studybuddy
 
+
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
@@ -97,6 +98,7 @@ class LogIn : AppCompatActivity() {
                 }
             }
     }
+    
 
     fun signInToGoogle() {
         //Calling Intent and call startActivityForResult() method
